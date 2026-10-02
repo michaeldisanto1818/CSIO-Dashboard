@@ -80,6 +80,49 @@ select.single option{background:var(--bg-card);color:var(--tp)}
 .gif-placeholder{width:100%;height:180px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;background:var(--bg-page)}
 .gif-placeholder span{font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--ts);letter-spacing:.1em;text-transform:uppercase;opacity:.5}
 .gif-label{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--ts);padding:6px 10px;width:100%;text-align:center;border-top:1px solid var(--border)}
+/* ── Controllable player ── */
+.vp-stage{width:100%;background:#000;line-height:0;cursor:pointer;outline:none}
+.vp-stage:focus-visible{box-shadow:inset 0 0 0 1px var(--a1)}
+.vp-canvas{width:100%;height:auto;display:block}
+.vp-controls{width:100%;padding:7px 10px 8px;border-top:1px solid var(--border);background:var(--bg-page);display:flex;flex-direction:column;gap:6px}
+.vp-row{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.vp-btn{font-family:'IBM Plex Mono',monospace;font-size:10px;min-width:30px;padding:3px 8px;border-radius:4px;border:1px solid var(--border);background:transparent;color:var(--ts);cursor:pointer;transition:all .15s}
+.vp-btn:hover{border-color:var(--a1);color:var(--a1)}
+.vp-btn.active{border-color:var(--a1);color:var(--a1)}
+.vp-play{min-width:38px;color:var(--tp)}
+.vp-readout{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.06em;color:var(--ts);margin-left:auto;white-space:nowrap}
+.vp-speed{font-family:'IBM Plex Mono',monospace;font-size:10px;background:var(--bg-page);color:var(--ts);border:1px solid var(--border);border-radius:4px;padding:2px 4px;outline:none;cursor:pointer}
+.vp-scrub{width:100%;accent-color:var(--a1);cursor:pointer;margin:0}
+.gif-card{max-width:960px}
+.gif-card video{max-width:100%}
+/* ── Upload / new-session panel ── */
+.upload-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:8px}
+.txt-input{width:100%;background:var(--bg-page);color:var(--tp);border:1px solid var(--border);border-radius:4px;font-family:'IBM Plex Mono',monospace;font-size:11px;padding:6px 8px;outline:none;box-sizing:border-box}
+.txt-input:focus{border-color:var(--a2)}
+input[type=file]{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--ts);width:100%}
+input[type=file]::file-selector-button{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.08em;text-transform:uppercase;background:transparent;color:var(--ts);border:1px solid var(--border);border-radius:4px;padding:4px 8px;margin-right:8px;cursor:pointer}
+#up-status.ok{color:var(--a3)}
+#up-status.err{color:var(--a4)}
+/* ── Pending / uploaded session cards ── */
+.pending-badge{font-size:8px;color:var(--a2);border:1px solid var(--a2);border-radius:3px;padding:1px 4px;margin-left:6px;letter-spacing:.1em;vertical-align:middle}
+.pending-note{font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--ts);text-align:center;padding:4px 6px;opacity:.75}
+.mesh-btn{font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:.08em;background:transparent;color:var(--a1);border:1px solid var(--a1);border-radius:3px;padding:2px 6px;margin-left:8px;cursor:pointer;float:right}
+.mesh-btn:hover{background:var(--a1);color:#000}
+/* ── 3D mesh viewer panel ── */
+#mesh-viewer-panel{background:var(--bg-card);border:1px solid var(--border);border-radius:6px;margin-bottom:18px;overflow:hidden}
+#mesh-viewer-panel.hidden{display:none}
+.mesh-vp-hdr{display:flex;align-items:center;justify-content:space-between;padding:10px 14px;border-bottom:1px solid var(--border)}
+.mesh-vp-title{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.15em;color:var(--a1)}
+.mesh-close-btn{background:transparent;border:1px solid var(--border);color:var(--ts);border-radius:4px;padding:3px 8px;cursor:pointer;font-family:'IBM Plex Mono',monospace;font-size:10px}
+.mesh-close-btn:hover{border-color:var(--a4);color:var(--a4)}
+#mesh-canvas-wrap{width:100%;height:380px;background:#0a1220}
+.mesh-vp-controls{display:flex;align-items:center;gap:12px;padding:10px 14px;flex-wrap:wrap}
+#mesh-scrub{flex:1;min-width:160px;accent-color:var(--a1)}
+#mesh-frame-label{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--ts);min-width:150px}
+.mesh-loading-overlay{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:var(--ts);font-family:'IBM Plex Mono',monospace;font-size:11px;background:rgba(10,18,32,.7);letter-spacing:.1em}
+.mesh-loading-overlay.hidden{display:none}
+.mesh-grf-label{display:flex;align-items:center;gap:5px;cursor:pointer;font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.08em;text-transform:uppercase;color:var(--ts)}
+@media(max-width:900px){.upload-grid{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -96,6 +139,45 @@ select.single option{background:var(--bg-card);color:var(--tp)}
   <div class="hdr-row"><h1>FENCING</h1><span class="hdr-sub">BIOMECHANICS DASHBOARD</span></div>
   <div id="hdr-meta-wrap"></div>
   <hr/>
+</div>
+
+<div class="card" id="upload-card" style="margin-bottom:18px">
+  <div class="stitle c2">Add Real-World Session</div>
+  <div class="clabel">Upload competition or training video — pair it with a predictions file (from <code>convert_predictions.py</code>) to unlock full analysis</div>
+  <div class="upload-grid">
+    <div>
+      <div class="clabel">Video file (.mp4 / .mov)</div>
+      <input type="file" id="up-video" accept="video/*"/>
+    </div>
+    <div>
+      <div class="clabel">Backend API URL (optional — leave blank for manual mode)</div>
+      <input type="text" id="up-api-url" placeholder="https://your-api.example.com" class="txt-input"/>
+    </div>
+    <div>
+      <div class="clabel">Predictions file (optional, .json)</div>
+      <input type="file" id="up-json" accept=".json,application/json"/>
+    </div>
+    <div>
+      <div class="clabel">Mesh data (optional, matching _verts.bin)</div>
+      <input type="file" id="up-verts" accept=".bin"/>
+    </div>
+    <div>
+      <div class="clabel">Subject label</div>
+      <input type="text" id="up-subject" placeholder="e.g. S14" class="txt-input"/>
+    </div>
+    <div>
+      <div class="clabel">Action label</div>
+      <input type="text" id="up-action" placeholder="e.g. Lunge_practice" class="txt-input"/>
+    </div>
+    <div style="display:flex;align-items:flex-end">
+      <button class="mbtn" id="up-add-btn" style="width:100%">ADD SESSION</button>
+    </div>
+  </div>
+  <div class="hint" id="up-status" style="margin-top:8px"></div>
+  <div class="hint" style="margin-top:6px;opacity:.55">
+    <b>Manual mode</b> (no API URL): video only &rarr; pending clip you preview now, add a predictions file later to unlock plots. Video + predictions file &rarr; added immediately.<br/>
+    <b>Backend mode</b> (API URL set): video alone is uploaded to your private server, which runs the model and returns results automatically — no predictions file needed here.
+  </div>
 </div>
 
 <div class="controls-top">
@@ -126,19 +208,8 @@ select.single option{background:var(--bg-card);color:var(--tp)}
   <div class="card">
     <div class="stitle c4">GRF / CoP</div>
     <div class="clabel">Overlay force data</div>
-    <select id="sel-force" class="single">
-      <option value="none">None</option>
-      <option value="GRF_Left_Y">GRF Left Y (vertical)</option>
-      <option value="GRF_Right_Y">GRF Right Y (vertical)</option>
-      <!--option value="GRF_Left_X">GRF Left X</option>
-      <option value="GRF_Right_X">GRF Right X</option>
-      <option value="GRF_Left_Z">GRF Left Z</option>
-      <option value="GRF_Right_Z">GRF Right Z</option>
-      <option value="COP_Left_X">CoP Left X</option>
-      <option value="COP_Left_Z">CoP Left Z</option>
-      <option value="COP_Right_X">CoP Right X</option>
-      <option value="COP_Right_Z">CoP Right Z</option-->
-    </select>
+    <div class="cb-list" id="cb-force"></div>
+    <div class="hint">Tick one or more &middot; drawn on the right-hand axis</div>
     <div style="margin-top:10px;border-top:1px solid var(--border);padding-top:10px">
       <div class="clabel">Step segments</div>
       <div class="metric-btns" style="gap:6px;margin-top:4px">
@@ -165,6 +236,25 @@ select.single option{background:var(--bg-card);color:var(--tp)}
   <div class="gif-card hidden" id="gif-S2-Lungetwo">
     <img src="s2_fencing04_Lungetwo.gif" alt="S2 Lungetwo">
     <div class="gif-label">S2 &mdash; Lungetwo</div>
+  </div>
+</div>
+
+<div id="mesh-viewer-panel" class="hidden">
+  <div class="mesh-vp-hdr">
+    <span class="mesh-vp-title" id="mesh-viewer-title">3D MESH VIEW</span>
+    <button class="mesh-close-btn" onclick="closeMeshViewer()">CLOSE &times;</button>
+  </div>
+  <div id="mesh-viewer-body" style="position:relative">
+    <div id="mesh-canvas-wrap"></div>
+    <div id="mesh-loading" class="mesh-loading-overlay hidden">LOADING MESH&hellip;</div>
+  </div>
+  <div class="mesh-vp-controls">
+    <button class="mbtn" id="mesh-play-btn">&#9654; PLAY</button>
+    <input type="range" id="mesh-scrub" min="0" max="0" value="0"/>
+    <span id="mesh-frame-label">frame 0/0</span>
+    <label class="mesh-grf-label">
+      <input type="checkbox" id="mesh-grf-toggle" checked/> GRF vectors
+    </label>
   </div>
 </div>
 
@@ -235,6 +325,39 @@ const METRIC_LABELS={
 // ================================================================
 let currentMetric='angles';
 
+// Force channels offered in the GRF / CoP card (multi-select).
+// To expose more, add entries here (e.g. ['GRF_Left_X','GRF Left X']).
+const FORCE_OPTIONS=[
+  ['GRF_Left_Y','GRF Left Y (vertical)'],
+  ['GRF_Right_Y','GRF Right Y (vertical)'],
+];
+const FORCE_DASH={Left:'dot',Right:'dashdot'};
+
+// Playhead state: session key -> current data-frame index (driven by the media players)
+const PLAYHEAD={};
+let MARKERS=[];   // {key, traceIdx, y[]}  -> circle on each plotted curve
+let CURSORS=[];   // {key, shapeIdx}       -> vertical time cursor per session
+let _phRaf=0;
+function setPlayhead(key, idx){
+  PLAYHEAD[key]=idx;
+  if(_phRaf) return;
+  _phRaf=requestAnimationFrame(()=>{ _phRaf=0; applyPlayhead(); });
+}
+function applyPlayhead(){
+  const plot=document.getElementById('plot');
+  if(!plot || !plot.data || (!MARKERS.length && !CURSORS.length)) return;
+  const tAt=key=>{
+    const d=ALL_SESSIONS[key]; if(!d) return 0;
+    const i=Math.max(0,Math.min(d.T-1,PLAYHEAD[key]||0));
+    return {i,t:d.time[i]};
+  };
+  const xs=[],ys=[],idx=[];
+  MARKERS.forEach(m=>{ const {i,t}=tAt(m.key); xs.push([t]); ys.push([m.y[i]]); idx.push(m.traceIdx); });
+  const lay={};
+  CURSORS.forEach(c=>{ const {t}=tAt(c.key); lay[`shapes[${c.shapeIdx}].x0`]=t; lay[`shapes[${c.shapeIdx}].x1`]=t; });
+  Plotly.update(plot, MARKERS.length?{x:xs,y:ys}:{}, lay, MARKERS.length?idx:[]);
+}
+
 // ================================================================
 // HELPERS
 // ================================================================
@@ -256,7 +379,7 @@ function populateSingleSelect(el, items, defaultVal){
 }
 
 // Build a checkbox list inside a container div
-function buildCheckboxList(containerId, items, defaultChecked, onChange){
+function buildCheckboxList(containerId, items, defaultChecked, onChange, labels){
   const container=document.getElementById(containerId);
   container.innerHTML='';
   items.forEach((val,i)=>{
@@ -267,7 +390,7 @@ function buildCheckboxList(containerId, items, defaultChecked, onChange){
     cb.type='checkbox'; cb.id=id; cb.value=val;
     cb.checked=defaultChecked.includes(val);
     const lbl=document.createElement('label');
-    lbl.htmlFor=id; lbl.textContent=val;
+    lbl.htmlFor=id; lbl.textContent=(labels&&labels[val])||val;
     cb.addEventListener('change',()=>{
       wrap.classList.toggle('checked',cb.checked);
       onChange();
@@ -432,11 +555,12 @@ function buildStepShapes(sessionKey, fps, sessionColorIdx){
 function redraw(){
   const keys     =getActiveKeys();
   const dofs     =getSelected(document.getElementById('sel-dof'));
-  const forceVal =document.getElementById('sel-force').value;
+  const forceVals=getChecked('cb-force');
   const ml       =METRIC_LABELS[currentMetric];
-  const hasForce =forceVal!=='none';
+  const hasForce =forceVals.length>0;
 
   updateMeta(keys);
+  MARKERS=[]; CURSORS=[];
 
   if(!keys.length||!dofs.length){
     Plotly.react('plot',[],{
@@ -451,6 +575,7 @@ function redraw(){
   }
 
   const traces=[];
+  const curves=[];
 
   // Each session gets a base color; each DOF within that session gets a dash style
   keys.forEach((key,si)=>{
@@ -468,11 +593,12 @@ function redraw(){
         hovertemplate:`%{y:.3f}${ml.unit}<extra>${d.subject}/${d.action}<br>${dof}</extra>`,
         yaxis:'y',
       });
+      curves.push({key,ydata,yaxis:'y',color:baseColor});
     });
 
-    // Force overlay per session (same color, thinner, dotted, secondary y)
-    if(hasForce){
-      const [type,side,ax]=forceVal.split('_');
+    // Force overlays per session (same color, thinner, secondary y); one trace per ticked channel
+    forceVals.forEach(fv=>{
+      const [type,side,ax]=fv.split('_');
       const axIdx={X:0,Y:1,Z:2}[ax];
       const sideIdx=side==='Left'?0:1;
       const fdata=d[type].map(frame=>frame[sideIdx][axIdx]);
@@ -480,14 +606,27 @@ function redraw(){
       traces.push({
         x:d.time,y:fdata,mode:'lines',
         name:`${d.subject}/${d.action} ${type} ${side}${ax}`,
-        line:{color:baseColor,width:1.2,dash:'dot'},
-        fill:'tozeroy',
+        line:{color:baseColor,width:1.4,dash:FORCE_DASH[side]||'dot'},
+        fill:forceVals.length===1?'tozeroy':'none',
         fillcolor:`rgba(${r},${g},${b},0.04)`,
         hovertemplate:`%{y:.2f}${funit}<extra>${d.subject}/${d.action} ${type} ${side}${ax}</extra>`,
         yaxis:'y2',
-        opacity:0.7,
+        opacity:0.8,
       });
-    }
+      curves.push({key,ydata:fdata,yaxis:'y2',color:baseColor});
+    });
+  });
+
+  // Playhead circles: one marker per plotted curve, moved by setPlayhead()
+  curves.forEach(c=>{
+    const d=ALL_SESSIONS[c.key];
+    const i=Math.max(0,Math.min(d.T-1,PLAYHEAD[c.key]||0));
+    MARKERS.push({key:c.key,traceIdx:traces.length,y:c.ydata});
+    traces.push({
+      x:[d.time[i]], y:[c.ydata[i]], mode:'markers',
+      marker:{size:11,color:c.color,line:{color:'#ffffff',width:2}},
+      yaxis:c.yaxis, showlegend:false, hoverinfo:'skip', cliponaxis:false,
+    });
   });
 
   const sessionLabel=keys.map(k=>{const d=ALL_SESSIONS[k];return`${d.subject}/${d.action}`;}).join(' vs ');
@@ -507,7 +646,7 @@ function redraw(){
     yaxis:{...axBase,title:{text:ml.ylab,font:{size:9,color:TS}}},
     ...(hasForce?{yaxis2:{
       ...axBase,
-      title:{text:forceVal.startsWith('GRF')?'force (N)':'position (m)',font:{size:9,color:A4}},
+      title:{text:forceVals.every(v=>v.startsWith('GRF'))?'force (N)':'position (m)',font:{size:9,color:A4}},
       overlaying:'y',side:'right',
       tickfont:{...axBase.tickfont,color:A4},
     }}:{}),
@@ -517,7 +656,17 @@ function redraw(){
       xanchor:'center',showarrow:false,
       font:{family:"'IBM Plex Mono',monospace",size:11,color:A1},
     }],
-    shapes: keys.flatMap((key,si)=>buildStepShapes(key, ALL_SESSIONS[key].fps, si)),
+    shapes: (()=>{
+      const sh=keys.flatMap((key,si)=>buildStepShapes(key, ALL_SESSIONS[key].fps, si));
+      keys.forEach((key,si)=>{
+        const d=ALL_SESSIONS[key], i=Math.max(0,Math.min(d.T-1,PLAYHEAD[key]||0));
+        const {r,g,b}=hexRgb(SESSION_COLORS[si%SESSION_COLORS.length]);
+        CURSORS.push({key,shapeIdx:sh.length});
+        sh.push({type:'line',xref:'x',yref:'paper',x0:d.time[i],x1:d.time[i],y0:0,y1:1,
+                 line:{color:`rgba(${r},${g},${b},0.55)`,width:1.5},layer:'above'});
+      });
+      return sh;
+    })(),
   };
 
   Plotly.react('plot',traces,layout,{
@@ -548,7 +697,7 @@ function init(){
   populateSingleSelect(document.getElementById('sel-segment'), Object.keys(SEGMENT_DOFS), 'Left Thigh');
   document.getElementById('sel-segment').addEventListener('change', repopulateDOFs);
   document.getElementById('sel-dof').addEventListener('change', redraw);
-  document.getElementById('sel-force').addEventListener('change', redraw);
+  buildCheckboxList('cb-force', FORCE_OPTIONS.map(o=>o[0]), [], redraw, Object.fromEntries(FORCE_OPTIONS));
 
   document.getElementById('metric-btns').addEventListener('click', e=>{
     const btn=e.target.closest('.mbtn');
@@ -579,6 +728,840 @@ function refreshActionAvailability(){
 
 init();
 
+</script>
+
+<!-- ==================================================================
+     Real-world video upload + 3D mesh viewer.
+     Loaded as classic (non-module) scripts so they share the same
+     top-level scope as the script above -- ALL_SESSIONS, GIF_MAP,
+     redraw(), buildCheckboxList(), etc. are all directly usable below,
+     and functions redeclared below (updateMeta, buildStepShapes)
+     intentionally override the earlier versions to add upload support.
+     ================================================================== -->
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/build/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+<script>
+
+// ================================================================
+// UPLOAD: register new sessions from the client's own video/predictions
+// ================================================================
+const PENDING_UPLOADS = {};      // id -> {subject, action, videoURL}
+const UPLOAD_VIDEO_URLS = {};    // sessionKey -> object URL (for full sessions)
+let uploadCounter = 0;
+
+const REQUIRED_SESSION_KEYS = ['fps','T','time','angles','torques','velos','accels','GRF','COP','dof_names','subject','action'];
+
+function readFileAsText(file){
+  return new Promise((res,rej)=>{
+    const r=new FileReader();
+    r.onload=()=>res(r.result);
+    r.onerror=()=>rej(new Error('could not read file'));
+    r.readAsText(file);
+  });
+}
+function readFileAsArrayBuffer(file){
+  return new Promise((res,rej)=>{
+    const r=new FileReader();
+    r.onload=()=>res(r.result);
+    r.onerror=()=>rej(new Error('could not read file'));
+    r.readAsArrayBuffer(file);
+  });
+}
+
+function validateSessionJSON(obj){
+  const missing=REQUIRED_SESSION_KEYS.filter(k=>!(k in obj));
+  if(missing.length) throw new Error('missing required field(s): '+missing.join(', '));
+}
+
+function clearUploadInputs(){
+  ['up-video','up-json','up-verts','up-subject','up-action'].forEach(id=>{
+    document.getElementById(id).value='';
+  });
+}
+
+function setUploadStatus(msg, ok){
+  const el=document.getElementById('up-status');
+  el.textContent=msg;
+  el.className='hint';
+  el.classList.add(ok?'ok':'err');
+}
+
+// ================================================================
+// BACKEND API MODE (optional) — if an API URL is given, video uploads go
+// to your private server (which runs the model) instead of requiring a
+// manually-produced predictions file. Hardcode DEFAULT_API_BASE_URL below
+// once you've deployed the backend, so clients don't need to type it in.
+// ================================================================
+const DEFAULT_API_BASE_URL = 'https://csio-backend-j63v.onrender.com'; // e.g. 'https://fencing-api.yourdomain.com'
+const DEFAULT_API_KEY = 'CSIOfencingkey'
+
+
+function getApiBaseUrl(){
+  const typed = document.getElementById('up-api-url').value.trim().replace(/\/$/,'');
+  return typed || DEFAULT_API_BASE_URL;
+}
+
+async function pollJob(apiBase, jobId, {intervalMs=2000, timeoutMs=10*60*1000}={}){
+  const start=Date.now();
+  while(Date.now()-start < timeoutMs){
+    const resp = await fetch(`${apiBase}/api/sessions/${jobId}`, {
+      headers: { 'X-API-Key': DEFAULT_API_KEY }
+    });
+    if(!resp.ok) throw new Error(`status check failed (${resp.status})`);
+    const s = await resp.json();
+    if(s.status==='done') return s;
+    if(s.status==='error') throw new Error(s.error||'model run failed');
+    await new Promise(r=>setTimeout(r, intervalMs));
+  }
+  throw new Error('timed out waiting for results');
+}
+
+async function handleApiUpload(apiBase, videoFile, subject, action){
+  uploadCounter++;
+  const pendingId=`pending-${uploadCounter}`;
+  const videoURL=URL.createObjectURL(videoFile);
+  PENDING_UPLOADS[pendingId]={subject, action, videoURL};
+  renderPendingCard(pendingId, 'PROCESSING…');
+
+  const fd=new FormData();
+  fd.append('video', videoFile);
+  fd.append('subject', subject);
+  fd.append('action', action);
+
+  setUploadStatus(`Uploading to ${apiBase} …`, true);
+  const resp = await fetch(`${apiBase}/api/sessions`, {
+    method: 'POST',
+    headers: { 'X-API-Key': DEFAULT_API_KEY },
+    body: fd
+  });
+  if(!resp.ok) throw new Error(`upload failed (${resp.status})`);
+  const {job_id} = await resp.json();
+
+  setUploadStatus(`Processing on server (job ${job_id})… this can take a while, feel free to keep using the dashboard.`, true);
+  const finalStatus = await pollJob(apiBase, job_id);
+
+  const sessionData = await (await fetch(`${apiBase}/api/sessions/${job_id}/result.json`, {
+    headers: { 'X-API-Key': DEFAULT_API_KEY }
+  })).json();
+
+  const key = `${sessionData.subject}::${sessionData.action}`;
+  if(ALL_SESSIONS[key]){
+    setUploadStatus(`Server finished, but "${sessionData.subject} / ${sessionData.action}" already exists locally — refresh to avoid confusion.`, false);
+    return;
+  }
+  ALL_SESSIONS[key]=sessionData;
+
+  if(finalStatus.has_mesh){
+    try{
+      const buf = await (await fetch(`${apiBase}/api/sessions/${job_id}/verts.bin`, {
+        headers: { 'X-API-Key': DEFAULT_API_KEY }
+      })).arrayBuffer();
+      MESH_CACHE[key]=new Float32Array(buf);
+    }catch(e){ /* mesh optional */ }
+  }
+  UPLOAD_VIDEO_URLS[key]=videoURL;
+
+  const card=document.getElementById(`card-${pendingId}`);
+  if(card) card.remove();
+  delete PENDING_UPLOADS[pendingId];
+
+  registerUploadedSession(key, sessionData.subject, sessionData.action);
+  setUploadStatus(`"${sessionData.subject} / ${sessionData.action}" is ready — select it above to view its data.`, true);
+}
+
+async function handleAddSession(){
+  const videoFile = document.getElementById('up-video').files[0];
+  const jsonFile  = document.getElementById('up-json').files[0];
+  const vertsFile = document.getElementById('up-verts').files[0];
+  const labelSubj = document.getElementById('up-subject').value.trim();
+  const labelAct  = document.getElementById('up-action').value.trim();
+  const apiBase   = getApiBaseUrl();
+
+  if(apiBase && videoFile){
+    if(!labelSubj || !labelAct){
+      setUploadStatus('Give this clip a subject + action label.', false);
+      return;
+    }
+    try{
+      await handleApiUpload(apiBase, videoFile, labelSubj, labelAct);
+      clearUploadInputs();
+    }catch(err){
+      setUploadStatus('Backend upload failed: '+err.message, false);
+    }
+    return;
+  }
+
+  if(!videoFile && !jsonFile){
+    setUploadStatus('Add at least a video file, or a predictions JSON file.', false);
+    return;
+  }
+
+  const videoURL = videoFile ? URL.createObjectURL(videoFile) : null;
+
+  // ---- Video only: register as a pending clip, no plots possible yet ----
+  if(!jsonFile){
+    if(!labelSubj || !labelAct){
+      setUploadStatus('Give this clip a subject + action label so you can find it later.', false);
+      return;
+    }
+    uploadCounter++;
+    const id=`pending-${uploadCounter}`;
+    PENDING_UPLOADS[id]={subject:labelSubj, action:labelAct, videoURL};
+    renderPendingCard(id);
+    setUploadStatus(`Added "${labelSubj} / ${labelAct}" as pending — re-run this panel with a predictions file once the biomechanics model has processed the clip.`, true);
+    clearUploadInputs();
+    return;
+  }
+
+  // ---- Video (optional) + predictions JSON: register as a full session ----
+  let sessionData;
+  try{
+    sessionData = JSON.parse(await readFileAsText(jsonFile));
+    validateSessionJSON(sessionData);
+  }catch(err){
+    setUploadStatus('Could not read predictions file: '+err.message, false);
+    return;
+  }
+
+  const subject = labelSubj || sessionData.subject || 'UPLOAD';
+  const action  = labelAct  || sessionData.action  || (sessionData.vid_name || `session${uploadCounter+1}`);
+  const key = `${subject}::${action}`;
+
+  if(ALL_SESSIONS[key]){
+    setUploadStatus(`A session named "${subject} / ${action}" already exists — pick a different label.`, false);
+    return;
+  }
+
+  sessionData.subject=subject;
+  sessionData.action=action;
+  ALL_SESSIONS[key]=sessionData;
+
+  if(vertsFile){
+    try{
+      MESH_CACHE[key]=new Float32Array(await readFileAsArrayBuffer(vertsFile));
+      sessionData.has_mesh=true;
+    }catch(err){ /* mesh is optional, ignore failures */ }
+  }
+  if(videoURL) UPLOAD_VIDEO_URLS[key]=videoURL;
+
+  registerUploadedSession(key, subject, action);
+  setUploadStatus(`Added "${subject} / ${action}" — select it above to view its data.`, true);
+  clearUploadInputs();
+}
+
+// Rebuild subject/action checkbox lists to include a newly uploaded session,
+// keeping whatever the user already had checked, then add its media card.
+function registerUploadedSession(key, subject, action){
+  const allKeys=Object.keys(ALL_SESSIONS);
+  const subjects=[...new Set(allKeys.map(k=>k.split('::')[0]))].sort();
+  const actions =[...new Set(allKeys.map(k=>k.split('::')[1]))].sort();
+
+  const checkedSubjects=getChecked('cb-subjects').concat([subject]);
+  const checkedActions =getChecked('cb-actions').concat([action]);
+
+  buildCheckboxList('cb-subjects', subjects, checkedSubjects, ()=>{
+    refreshActionAvailability();
+    redraw();
+  });
+  buildCheckboxList('cb-actions', actions, checkedActions, redraw);
+  refreshActionAvailability();
+
+  addSessionCard(key, subject, action);
+  redraw();
+}
+
+function renderPendingCard(id, badgeText){
+  badgeText = badgeText || 'PENDING';
+  const p=PENDING_UPLOADS[id];
+  const strip=document.getElementById('gif-strip');
+  strip.style.display='flex';
+  const card=document.createElement('div');
+  card.className='gif-card';
+  card.id=`card-${id}`;
+  card.innerHTML=`
+    <video src="${p.videoURL}" controls muted style="width:100%;display:block"></video>
+    <div class="gif-label">${p.subject} &mdash; ${p.action}<span class="pending-badge">${badgeText}</span></div>
+    <div class="pending-note">${badgeText==='PENDING' ? 'Analysis pending — awaiting predictions file' : 'Your private server is running the model on this clip…'}</div>
+  `;
+  strip.appendChild(card);
+}
+
+// Add a media card (video + "3D VIEW" button) for a newly-registered full session
+function addSessionCard(key, subject, action){
+  const strip=document.getElementById('gif-strip');
+  strip.style.display='flex';
+  const cardId=`gif-upload-${key.replace('::','-')}`;
+  if(document.getElementById(cardId)){ GIF_MAP[key]=cardId; return; }
+
+  const videoURL=UPLOAD_VIDEO_URLS[key];
+  const card=document.createElement('div');
+  card.className='gif-card';
+  card.id=cardId;
+
+  const mediaHTML = videoURL
+    ? `<video src="${videoURL}" controls muted loop autoplay playsinline style="width:100%;display:block"></video>`
+    : `<div class="gif-placeholder"><span>NO VIDEO</span></div>`;
+
+  card.innerHTML=`
+    ${mediaHTML}
+    <div class="gif-label">${subject} &mdash; ${action}<button class="mesh-btn" data-session="${key}">3D VIEW</button></div>
+  `;
+  strip.appendChild(card);
+  GIF_MAP[key]=cardId;
+  const vEl=card.querySelector('video');
+  if(vEl && typeof attachVideoSync==='function') attachVideoSync(key, vEl);
+}
+
+// Give the 3 built-in demo sessions a "3D VIEW" button too (real mesh data
+// for these ships alongside index.html as <vid_name>_verts.bin)
+function attachMeshButtonsToBuiltins(){
+  Object.entries(GIF_MAP).forEach(([key,cardId])=>{
+    const card=document.getElementById(cardId);
+    if(!card || card.querySelector('.mesh-btn')) return;
+    const label=card.querySelector('.gif-label');
+    const btn=document.createElement('button');
+    btn.className='mesh-btn';
+    btn.dataset.session=key;
+    btn.textContent='3D VIEW';
+    label.appendChild(btn);
+  });
+}
+
+document.addEventListener('click', e=>{
+  const btn=e.target.closest('.mesh-btn');
+  if(btn) openMeshViewer(btn.dataset.session);
+});
+document.getElementById('up-add-btn').addEventListener('click', handleAddSession);
+
+// ---- Override updateMeta so dynamically-added session cards toggle
+//      visibility the same way the 3 built-in gif cards do (uses the
+//      shared, mutable GIF_MAP instead of a hardcoded literal) ----
+function updateMeta(keys){
+  const wrap=document.getElementById('hdr-meta-wrap');
+  if(!keys.length){
+    wrap.innerHTML='<div class="meta-rows"><div class="meta-row"><span>NO SESSIONS SELECTED</span></div></div>';
+  } else {
+    const rows=keys.map((k,si)=>{
+      const d=ALL_SESSIONS[k];
+      const color=SESSION_COLORS[si%SESSION_COLORS.length];
+      const bg=color+'22';
+      return `<div class="meta-row">
+        <span class="meta-row-label" style="background:${bg};color:${color}">${d.subject} / ${d.action}</span>
+        <span>TRIAL&nbsp;&nbsp;${d.trial||'—'}</span>
+        <span>FPS&nbsp;&nbsp;${d.fps}</span>
+        <span>FRAMES&nbsp;&nbsp;${d.T}</span>
+      </div>`;
+    }).join('');
+    wrap.innerHTML=`<div class="meta-rows">${rows}</div>`;
+  }
+  Object.entries(GIF_MAP).forEach(([sessionKey,cardId])=>{
+    const card=document.getElementById(cardId);
+    const hide=!keys.includes(sessionKey);
+    if(card) card.classList.toggle('hidden', hide);
+    // pause hidden players, resume the ones that were playing when re-shown
+    const p=(typeof PLAYERS!=='undefined') && PLAYERS[sessionKey];
+    if(p && p.pause){
+      if(hide && !p._hidden){ p._hidden=true; p._was=p.isPlaying(); p.pause(); }
+      else if(!hide && p._hidden){ p._hidden=false; if(p._was) p.resume(); }
+    }
+  });
+  const strip=document.getElementById('gif-strip');
+  if(strip) strip.style.display = (keys.length || Object.keys(PENDING_UPLOADS).length) ? 'flex' : 'none';
+  if(typeof ensurePlayers==='function') ensurePlayers(keys);
+}
+
+// ---- Override buildStepShapes so an uploaded session's own auto-detected
+//      foot_segments (written by convert_predictions.py) are used when
+//      present, falling back to the hand-checked built-in table ----
+function buildStepShapes(sessionKey, fps, sessionColorIdx){
+  if(currentSteps==='none') return [];
+  let segs = ALL_SESSIONS[sessionKey] && ALL_SESSIONS[sessionKey].foot_segments;
+  if(!segs){
+    const segKey=SESSION_TO_SEG_KEY[sessionKey];
+    if(!segKey || !FENCING_FEET_SEGMENTS[segKey]) return [];
+    segs=FENCING_FEET_SEGMENTS[segKey];
+  }
+  const shapes=[];
+  const SIDE_COLORS={
+    R:{fill:'rgba(0,200,255,0.10)', line:'rgba(0,200,255,0.35)'},
+    L:{fill:'rgba(255,170,0,0.10)', line:'rgba(255,170,0,0.35)'},
+  };
+  const sides = currentSteps==='both' ? ['R','L'] : [currentSteps];
+  sides.forEach(side=>{
+    const intervals=segs[side]||[];
+    intervals.forEach(([liftFrame,contactFrame])=>{
+      const x0=(liftFrame-1)/fps, x1=(contactFrame-1)/fps;
+      const c=SIDE_COLORS[side];
+      shapes.push({
+        type:'rect', xref:'x', yref:'paper',
+        x0, x1, y0:0, y1:1,
+        fillcolor:c.fill,
+        line:{color:c.line, width:1, dash:'dot'},
+        layer:'below',
+      });
+    });
+  });
+  return shapes;
+}
+
+attachMeshButtonsToBuiltins();
+
+// ================================================================
+// 3D MESH VIEWER (Three.js) — renders the same SMPL vertex sequences
+// that demo_gif.py / interactive_dashboard.py consume, live in-browser.
+// ================================================================
+const N_VERTS=6890;
+const MESH_CACHE={};      // sessionKey -> Float32Array flat [T*6890*3]
+let SMPL_FACES=null;      // Uint16Array flat triangle indices
+
+let meshRenderer=null, meshScene=null, meshCamera=null, meshControls=null, meshMesh=null;
+let meshGRFArrows=[];
+let meshCurrentKey=null, meshFrame=0, meshPlaying=false, meshLastT=0;
+
+async function ensureFaces(){
+  if(SMPL_FACES) return SMPL_FACES;
+  const resp=await fetch('smpl_faces.bin');
+  if(!resp.ok) throw new Error('smpl_faces.bin not found');
+  SMPL_FACES=new Uint16Array(await resp.arrayBuffer());
+  return SMPL_FACES;
+}
+
+async function ensureMesh(key){
+  if(MESH_CACHE[key]) return MESH_CACHE[key];
+  const d=ALL_SESSIONS[key];
+  const url=`${d.vid_name}_verts.bin`;
+  const resp=await fetch(url);
+  if(!resp.ok) throw new Error(`${url} not found`);
+  const arr=new Float32Array(await resp.arrayBuffer());
+  MESH_CACHE[key]=arr;
+  return arr;
+}
+
+function initMeshViewer(){
+  const container=document.getElementById('mesh-canvas-wrap');
+  const w=container.clientWidth, h=380;
+
+  meshScene=new THREE.Scene();
+  meshScene.background=new THREE.Color(0x0a1220);
+
+  meshCamera=new THREE.PerspectiveCamera(35, w/h, 0.05, 50);
+  meshCamera.position.set(0, 1.1, 3.4);
+
+  meshRenderer=new THREE.WebGLRenderer({antialias:true});
+  meshRenderer.setSize(w,h);
+  container.innerHTML='';
+  container.appendChild(meshRenderer.domElement);
+
+  meshControls=new THREE.OrbitControls(meshCamera, meshRenderer.domElement);
+  meshControls.target.set(0,0.9,0);
+  meshControls.enableDamping=true;
+  meshControls.dampingFactor=0.08;
+  meshControls.update();
+
+  meshScene.add(new THREE.HemisphereLight(0xffffff,0x223344,1.1));
+  const dir=new THREE.DirectionalLight(0xffffff,0.6);
+  dir.position.set(2,4,3);
+  meshScene.add(dir);
+
+  meshScene.add(new THREE.GridHelper(4,16,0x1a2e4a,0x132035));
+
+  const geo=new THREE.BufferGeometry();
+  geo.setAttribute('position', new THREE.BufferAttribute(new Float32Array(N_VERTS*3),3));
+  const mat=new THREE.MeshStandardMaterial({color:0x00c8ff, side:THREE.DoubleSide, roughness:0.6, metalness:0.05});
+  meshMesh=new THREE.Mesh(geo, mat);
+  meshScene.add(meshMesh);
+
+  window.addEventListener('resize', ()=>{
+    const w2=container.clientWidth;
+    meshCamera.aspect=w2/h;
+    meshCamera.updateProjectionMatrix();
+    meshRenderer.setSize(w2,h);
+  });
+
+  (function animateLoop(){
+    requestAnimationFrame(animateLoop);
+    meshControls.update();
+    meshRenderer.render(meshScene, meshCamera);
+  })();
+}
+
+function setMeshFrame(key, frameIdx){
+  const d=ALL_SESSIONS[key];
+  const verts=MESH_CACHE[key];
+  if(!verts || !SMPL_FACES || !meshMesh) return;
+
+  const stride=N_VERTS*3, offset=frameIdx*stride;
+  const pos=meshMesh.geometry.attributes.position;
+  pos.array.set(verts.subarray(offset, offset+stride));
+  pos.needsUpdate=true;
+
+  if(!meshMesh.geometry.index){
+    meshMesh.geometry.setIndex(new THREE.BufferAttribute(SMPL_FACES,1));
+  }
+  meshMesh.geometry.computeVertexNormals();
+
+  updateGRFArrows(key, frameIdx);
+
+  document.getElementById('mesh-frame-label').textContent=
+    `frame ${frameIdx+1}/${d.T}  ·  t=${d.time[frameIdx].toFixed(2)}s`;
+  document.getElementById('mesh-scrub').value=frameIdx;
+}
+
+function updateGRFArrows(key, frameIdx){
+  meshGRFArrows.forEach(a=>meshScene.remove(a));
+  meshGRFArrows=[];
+  if(!document.getElementById('mesh-grf-toggle').checked) return;
+
+  const d=ALL_SESSIONS[key];
+  const bw=(d.bodymass||70)*9.8;
+  const grf=d.GRF[frameIdx], cop=d.COP[frameIdx];
+  const colors=[0xff6f6f,0x00e5ff]; // left, right
+  for(let side=0; side<2; side++){
+    const f=grf[side], c=cop[side];
+    const mag=Math.sqrt(f[0]**2+f[1]**2+f[2]**2);
+    if(mag<1e-3) continue;
+    const dir=new THREE.Vector3(f[0],f[1],f[2]).normalize();
+    const origin=new THREE.Vector3(c[0],c[1],c[2]);
+    const length=Math.min(1.2, mag/bw);
+    const arrow=new THREE.ArrowHelper(dir, origin, length, colors[side], length*0.25, length*0.15);
+    meshScene.add(arrow);
+    meshGRFArrows.push(arrow);
+  }
+}
+
+async function openMeshViewer(key){
+  const panel=document.getElementById('mesh-viewer-panel');
+  panel.classList.remove('hidden');
+  document.getElementById('mesh-viewer-title').textContent=
+    `3D MESH — ${ALL_SESSIONS[key].subject} / ${ALL_SESSIONS[key].action}`;
+  document.getElementById('mesh-loading').classList.remove('hidden');
+  if(typeof panel.scrollIntoView==='function') panel.scrollIntoView({behavior:'smooth', block:'nearest'});
+
+  if(!meshRenderer) initMeshViewer();
+
+  try{
+    await ensureFaces();
+    await ensureMesh(key);
+  }catch(err){
+    document.getElementById('mesh-loading').textContent = 'NO MESH DATA FOR THIS SESSION';
+    return;
+  }
+
+  document.getElementById('mesh-loading').classList.add('hidden');
+  meshCurrentKey=key;
+  meshFrame=0;
+  const d=ALL_SESSIONS[key];
+  document.getElementById('mesh-scrub').max=d.T-1;
+  setMeshFrame(key, 0);
+  setMeshPlaying(true);
+}
+
+function closeMeshViewer(){
+  document.getElementById('mesh-viewer-panel').classList.add('hidden');
+  setMeshPlaying(false);
+  meshCurrentKey=null;
+}
+
+function setMeshPlaying(on){
+  meshPlaying=on;
+  document.getElementById('mesh-play-btn').innerHTML = on ? '&#9208; PAUSE' : '&#9654; PLAY';
+  meshLastT=performance.now();
+  if(on) requestAnimationFrame(meshTick);
+}
+
+function meshTick(t){
+  if(!meshPlaying || !meshCurrentKey) return;
+  const d=ALL_SESSIONS[meshCurrentKey];
+  if((t-meshLastT)/1000 >= 1/d.fps){
+    meshLastT=t;
+    meshFrame=(meshFrame+1)%d.T;
+    setMeshFrame(meshCurrentKey, meshFrame);
+  }
+  requestAnimationFrame(meshTick);
+}
+
+document.getElementById('mesh-play-btn').addEventListener('click', ()=>setMeshPlaying(!meshPlaying));
+document.getElementById('mesh-scrub').addEventListener('input', e=>{
+  if(!meshCurrentKey) return;
+  setMeshPlaying(false);
+  meshFrame=parseInt(e.target.value,10);
+  setMeshFrame(meshCurrentKey, meshFrame);
+});
+document.getElementById('mesh-grf-toggle').addEventListener('change', ()=>{
+  if(meshCurrentKey) updateGRFArrows(meshCurrentKey, meshFrame);
+});
+
+</script>
+
+<script>
+// ================================================================
+// CONTROLLABLE MEDIA PLAYERS  (frame-accurate, synced to the plots)
+//   Built-in clips: GIFs are decoded in the browser and shown on a canvas
+//   with play/pause, frame stepping, a draggable scrubber and speed control.
+//   Uploaded clips: native <video controls>, synced via attachVideoSync().
+//   Every frame change calls setPlayhead(key, dataIndex), which moves the
+//   circle markers + cursor line on the plot.
+// ================================================================
+/* Minimal GIF decoder: returns fully composited RGBA frames (disposal + transparency handled). */
+function decodeGIF(buffer){
+  const b=new Uint8Array(buffer); let p=0;
+  const u16=()=>{const v=b[p]|(b[p+1]<<8);p+=2;return v;};
+  if(b[0]!==0x47||b[1]!==0x49||b[2]!==0x46) throw new Error('not a GIF');
+  p=6;
+  const W=u16(), H=u16(), sf=b[p++]; p+=2;
+  let gct=null;
+  if(sf&0x80){const n=3<<((sf&7)+1); gct=b.subarray(p,p+n); p+=n;}
+
+  const raw=[]; let gce=null;
+  while(p<b.length){
+    const t=b[p++];
+    if(t===0x3B) break;
+    if(t===0x21){
+      const label=b[p++];
+      if(label===0xF9){
+        const f=b[p+1];
+        gce={disposal:(f>>2)&7, transp:(f&1)?b[p+4]:-1, delay:(b[p+2]|(b[p+3]<<8))*10};
+      }
+      while(b[p]!==0) p+=b[p]+1;
+      p++;
+    } else if(t===0x2C){
+      const x=u16(),y=u16(),w=u16(),h=u16(),f=b[p++];
+      let ct=gct;
+      if(f&0x80){const n=3<<((f&7)+1); ct=b.subarray(p,p+n); p+=n;}
+      const minCode=b[p++];
+      let len=0, q=p;
+      while(b[q]!==0){len+=b[q]; q+=b[q]+1;}
+      const data=new Uint8Array(len); let o=0; q=p;
+      while(b[q]!==0){data.set(b.subarray(q+1,q+1+b[q]),o); o+=b[q]; q+=b[q]+1;}
+      p=q+1;
+      raw.push({x,y,w,h,ct,interlace:!!(f&0x40),idx:lzwDecode(data,minCode,w*h),gce});
+      gce=null;
+    } else break;
+  }
+
+  const frames=[], delays=[];
+  const canvas=new Uint8ClampedArray(W*H*4);
+  let prev=null, prevSnap=null;
+  for(const fr of raw){
+    if(prev){
+      const d=prev.gce?prev.gce.disposal:0;
+      if(d===2){
+        for(let yy=0;yy<prev.h;yy++){
+          const row=((prev.y+yy)*W+prev.x)*4;
+          canvas.fill(0,row,row+prev.w*4);
+        }
+      } else if(d===3 && prevSnap){
+        canvas.set(prevSnap);
+      }
+    }
+    const disp=fr.gce?fr.gce.disposal:0;
+    prevSnap=(disp===3)?canvas.slice():null;
+    const tr=fr.gce?fr.gce.transp:-1, ct=fr.ct;
+    // row order (handle interlace)
+    const order=new Array(fr.h);
+    if(fr.interlace){
+      let r=0;
+      for(const [s,st] of [[0,8],[4,8],[2,4],[1,2]]) for(let y=s;y<fr.h;y+=st) order[y]=r++;
+    } else for(let y=0;y<fr.h;y++) order[y]=y;
+    for(let yy=0;yy<fr.h;yy++){
+      const srcRow=order[yy]*fr.w, Y=fr.y+yy;
+      if(Y>=H) continue;
+      for(let xx=0;xx<fr.w;xx++){
+        const X=fr.x+xx; if(X>=W) continue;
+        const ci=fr.idx[srcRow+xx];
+        if(ci===tr) continue;
+        const o=(Y*W+X)*4, c=ci*3;
+        canvas[o]=ct[c]; canvas[o+1]=ct[c+1]; canvas[o+2]=ct[c+2]; canvas[o+3]=255;
+      }
+    }
+    frames.push(canvas.slice());
+    delays.push(fr.gce?fr.gce.delay:100);
+    prev=fr;
+  }
+  return {width:W,height:H,frames,delays};
+}
+
+function lzwDecode(data,minCode,npix){
+  const out=new Uint8Array(npix);
+  const clear=1<<minCode, eoi=clear+1;
+  let size=minCode+1, next=eoi+1, mask=(1<<size)-1;
+  const prefix=new Uint16Array(4096), suffix=new Uint8Array(4096), stack=new Uint8Array(4097);
+  for(let i=0;i<clear;i++) suffix[i]=i;
+  let bits=0, nbits=0, dp=0, op=0, prev=-1, first=0;
+  while(op<npix){
+    while(nbits<size){
+      if(dp>=data.length) return out;
+      bits|=data[dp++]<<nbits; nbits+=8;
+    }
+    const code=bits&mask; bits>>=size; nbits-=size;
+    if(code===clear){size=minCode+1; next=eoi+1; mask=(1<<size)-1; prev=-1; continue;}
+    if(code===eoi) break;
+    if(prev===-1){out[op++]=suffix[code]; prev=code; first=code; continue;}
+    let cur=code, sp=0;
+    if(code>=next){stack[sp++]=first; cur=prev;}
+    while(cur>=clear){stack[sp++]=suffix[cur]; cur=prefix[cur];}
+    first=suffix[cur]; stack[sp++]=first;
+    if(next<4096){
+      prefix[next]=prev; suffix[next]=first; next++;
+      if(next>mask && size<12){size++; mask=(1<<size)-1;}
+    }
+    prev=code;
+    while(sp>0 && op<npix) out[op++]=stack[--sp];
+  }
+  return out;
+}
+
+
+const PLAYERS = {};   // sessionKey -> {pause(), seek(i)} | {failed:true}
+
+function ensurePlayers(keys){
+  keys.forEach(k=>{
+    if(PLAYERS[k] || !GIF_MAP[k]) return;
+    const card=document.getElementById(GIF_MAP[k]);
+    const img=card && card.querySelector('img');
+    if(img) buildGifPlayer(k, card, img);
+  });
+}
+
+async function buildGifPlayer(key, card, img){
+  PLAYERS[key]={loading:true};
+  const d=ALL_SESSIONS[key];
+  let gif;
+  try{
+    const resp=await fetch(img.getAttribute('src'));
+    if(!resp.ok) throw new Error('HTTP '+resp.status);
+    gif=decodeGIF(await resp.arrayBuffer());
+    if(!gif.frames.length) throw new Error('no frames');
+  }catch(err){
+    console.warn('GIF player unavailable for',key,err);
+    PLAYERS[key]={failed:true};
+    const note=document.createElement('div');
+    note.className='pending-note';
+    note.textContent='Playback controls unavailable (could not load GIF) — showing plain animation';
+    img.after(note);
+    return;
+  }
+
+  const N=gif.frames.length, fps=d.fps||1000/(gif.delays[0]||50);
+  const toData=f=> N===d.T ? f : Math.round(f*(d.T-1)/Math.max(1,N-1));
+
+  const stage=document.createElement('div');
+  stage.className='vp-stage'; stage.tabIndex=0;
+  stage.title='Click to play/pause · ←/→ step · Shift+←/→ ±5 frames';
+  const cv=document.createElement('canvas');
+  cv.className='vp-canvas'; cv.width=gif.width; cv.height=gif.height;
+  stage.appendChild(cv);
+  const ctx=cv.getContext('2d');
+
+  const bar=document.createElement('div');
+  bar.className='vp-controls';
+  bar.innerHTML=`
+    <div class="vp-row">
+      <button class="vp-btn vp-prev" title="Previous frame">&#9664;&#9664;</button>
+      <button class="vp-btn vp-play" title="Play / pause">&#10074;&#10074;</button>
+      <button class="vp-btn vp-next" title="Next frame">&#9654;&#9654;</button>
+      <button class="vp-btn vp-loop active" title="Loop">&#8635;</button>
+      <span class="vp-readout"></span>
+      <select class="vp-speed" title="Playback speed">
+        <option value="0.1">0.1&times;</option><option value="0.25">0.25&times;</option>
+        <option value="0.5">0.5&times;</option><option value="1" selected>1&times;</option>
+        <option value="2">2&times;</option>
+      </select>
+    </div>
+    <input type="range" class="vp-scrub" min="0" max="${N-1}" value="0" step="1" title="Drag to scrub frames"/>`;
+  img.replaceWith(stage);
+  card.insertBefore(bar, card.querySelector('.gif-label'));
+
+  const $=s=>bar.querySelector(s);
+  const playBtn=$('.vp-play'), scrub=$('.vp-scrub'), readout=$('.vp-readout');
+  const imgData=new Array(N);
+  let frame=0, playing=false, loop=true, speed=1, last=0, acc=0, raf=0;
+
+  function show(f){
+    frame=Math.max(0,Math.min(N-1,f));
+    ctx.putImageData(imgData[frame]||(imgData[frame]=new ImageData(gif.frames[frame],gif.width,gif.height)),0,0);
+    scrub.value=frame;
+    const di=toData(frame);
+    readout.textContent=`frame ${frame+1}/${N} · t=${d.time[di].toFixed(2)}s`;
+    setPlayhead(key, di);
+  }
+  function tick(ts){
+    if(!playing) return;
+    acc+=(ts-last)/1000*speed; last=ts;
+    const step=1/fps, adv=Math.floor(acc/step);
+    if(adv>0){
+      acc-=adv*step;
+      let f=frame+adv;
+      if(f>=N){
+        if(loop) f%=N; else { show(N-1); setPlaying(false); return; }
+      }
+      show(f);
+    }
+    raf=requestAnimationFrame(tick);
+  }
+  function setPlaying(on){
+    playing=on;
+    playBtn.innerHTML=on?'&#10074;&#10074;':'&#9654;';
+    cancelAnimationFrame(raf);
+    if(on){
+      if(frame>=N-1 && !loop) show(0);
+      last=performance.now(); acc=0; raf=requestAnimationFrame(tick);
+    }
+  }
+  const pauseAnd=f=>{ setPlaying(false); show(f); };
+
+  playBtn.addEventListener('click',()=>setPlaying(!playing));
+  stage.addEventListener('click',()=>{ stage.focus(); setPlaying(!playing); });
+  $('.vp-prev').addEventListener('click',()=>pauseAnd((frame-1+N)%N));
+  $('.vp-next').addEventListener('click',()=>pauseAnd((frame+1)%N));
+  $('.vp-loop').addEventListener('click',e=>{ loop=!loop; e.currentTarget.classList.toggle('active',loop); });
+  $('.vp-speed').addEventListener('change',e=>{ speed=parseFloat(e.target.value); });
+  scrub.addEventListener('input',()=>pauseAnd(parseInt(scrub.value,10)));
+  stage.addEventListener('keydown',e=>{
+    const big=e.shiftKey?5:1;
+    if(e.key===' '){ e.preventDefault(); setPlaying(!playing); }
+    else if(e.key==='ArrowLeft'){ e.preventDefault(); pauseAnd(Math.max(0,frame-big)); }
+    else if(e.key==='ArrowRight'){ e.preventDefault(); pauseAnd(Math.min(N-1,frame+big)); }
+    else if(e.key==='Home'){ e.preventDefault(); pauseAnd(0); }
+    else if(e.key==='End'){ e.preventDefault(); pauseAnd(N-1); }
+  });
+
+  PLAYERS[key]={
+    pause:()=>setPlaying(false),
+    resume:()=>setPlaying(true),
+    seek:f=>pauseAnd(f),
+    isPlaying:()=>playing,
+    frame:()=>frame,
+    frames:N,
+  };
+  show(0);
+  if(!card.classList.contains('hidden')) setPlaying(true);
+}
+
+// Native <video> (uploaded clips) -> plot playhead
+function attachVideoSync(key, v){
+  const d=ALL_SESSIONS[key];
+  if(!d) return;
+  const idxOf=t=>{
+    const dur=v.duration;
+    let i;
+    if(!dur || !isFinite(dur) || Math.abs(dur-d.T/d.fps) < 0.1*(d.T/d.fps)) i=Math.round(t*d.fps);
+    else i=Math.round(t/dur*(d.T-1));
+    return Math.max(0,Math.min(d.T-1,i));
+  };
+  const upd=t=>setPlayhead(key, idxOf(t===undefined?v.currentTime:t));
+  ['seeking','seeked','timeupdate','loadedmetadata','pause','play'].forEach(ev=>v.addEventListener(ev,()=>upd()));
+  if('requestVideoFrameCallback' in v){
+    const cb=(now,meta)=>{ upd(meta.mediaTime); v.requestVideoFrameCallback(cb); };
+    v.requestVideoFrameCallback(cb);
+  } else {
+    (function loop(){ if(!v.paused) upd(); requestAnimationFrame(loop); })();
+  }
+  PLAYERS[key]={ pause:()=>v.pause(), resume:()=>v.play(), isPlaying:()=>!v.paused };
+  upd(0);
+}
+
+ensurePlayers(getActiveKeys());
 </script>
 </body>
 </html>
